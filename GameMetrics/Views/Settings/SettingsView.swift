@@ -1,9 +1,3 @@
-//
-//  Settings.swift
-//  GameMetrics
-//
-//  Created by Николай Щербаков on 30.07.2024.
-//
 
 import SwiftUI
 
@@ -37,7 +31,7 @@ struct SettingsView: View {
                         //action contact
                     } label: {
                         HStack(spacing: 12) {
-                            Image(systemName: "bubble.fill")
+                            Image(systemName: "wallet.pass.fill")
                                 .fontCustom(size: 20, weight: .semibold, color: .specialPrimary)
                             TextCustom(text: "License", size: 16, weight: .bold, color: .settingsText)
                             Spacer()
@@ -53,7 +47,7 @@ struct SettingsView: View {
                         //action contact
                     } label: {
                         HStack(spacing: 12) {
-                            Image(systemName: "bubble.fill")
+                            Image(systemName: "menucard.fill")
                                 .fontCustom(size: 20, weight: .semibold, color: .specialPrimary)
                             TextCustom(text: "Terms of use", size: 16, weight: .bold, color: .settingsText)
                             Spacer()
@@ -69,7 +63,7 @@ struct SettingsView: View {
                         //action contact
                     } label: {
                         HStack(spacing: 12) {
-                            Image(systemName: "bubble.fill")
+                            Image(systemName: "shield.fill")
                                 .fontCustom(size: 20, weight: .semibold, color: .specialPrimary)
                             TextCustom(text: "Privacy", size: 16, weight: .bold, color: .settingsText)
                             Spacer()

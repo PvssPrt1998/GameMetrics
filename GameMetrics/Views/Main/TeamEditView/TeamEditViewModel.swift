@@ -13,6 +13,6 @@ final class TeamEditViewModel: ObservableObject {
     
     func setTeam() {
         guard let imageData = imageData else { return }
-        dataManager.team = Team(logo: imageData, title: text)
+        dataManager.setTeam(logo: imageData, title: text)
     }
 }

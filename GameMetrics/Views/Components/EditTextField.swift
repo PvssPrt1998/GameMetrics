@@ -1,9 +1,3 @@
-//
-//  EditTextField.swift
-//  GameMetrics
-//
-//  Created by Николай Щербаков on 29.07.2024.
-//
 
 import SwiftUI
 

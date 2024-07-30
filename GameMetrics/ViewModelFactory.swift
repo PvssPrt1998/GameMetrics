@@ -11,4 +11,8 @@ final class ViewModelFactory {
     func makeMainViewModel() -> MainViewModel {
         MainViewModel(dataManager: dataManager)
     }
+    
+    func makeLoadingViewModel() -> LoadingViewModel {
+        LoadingViewModel(dataManager: dataManager)
+    }
 }

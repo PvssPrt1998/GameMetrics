@@ -13,6 +13,6 @@ final class EditStatViewModel: ObservableObject {
     
     func setStat() {
         guard let numberOfMatches = Int(numberOfMathcesText), let tournamentPlace = Int(tournamentPlaceText) else { return }
-        gameData.setStat(numberOfMathces: numberOfMatches, tournamentPlace: tournamentPlace)
+        gameData.setStat(numberOfMathces: numberOfMatches, tournamentPlace: tournamentPlace, isDotaType: gameData is DotaData ? true : false )
     }
 }

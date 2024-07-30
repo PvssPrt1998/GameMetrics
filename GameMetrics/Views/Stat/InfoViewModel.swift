@@ -5,7 +5,7 @@ final class InfoViewModel: ObservableObject {
     
     @Published var gameData: GameDataBase
     
-    var stat: Stat {
+    var stat: Stat? {
         gameData.stat
     }
     

@@ -1,9 +1,3 @@
-//
-//  MainButton.swift
-//  GameMetrics
-//
-//  Created by Николай Щербаков on 29.07.2024.
-//
 
 import SwiftUI
 
@@ -29,11 +23,16 @@ struct MainButton: View {
             }
             .padding(EdgeInsets(top: 16, leading: 19, bottom: 16, trailing: 19))
             .background(Color.bgSecond)
-            .clipShape(.rect(cornerRadius: 20))
+            
+            
         }
+        .clipShape(.rect(cornerRadius: 20))
     }
 }
 
 #Preview {
     MainButton(text: "123", imageTitle: "car", action: {})
+        .padding()
+        .background(Color.white)
 }
+

@@ -14,12 +14,12 @@ final class AddNotesViewModel: ObservableObject {
     
     func setNote() {
         guard let colorComponents = UIColor(color).cgColor.components else { return }
-        let colorData = colorComponents.map({Int($0)})
+        let colorData = colorComponents.map({Double($0)})
         let tagText = tagText.replacingOccurrences(of: "# ", with: "")
-        print(colorData) //TODO: - FIX COLOR SAVING
-        gameData.notes.append(Note(name: nameText,
-                                      description: descriptionText,
-                                      tag: tagText, 
-                                      color: colorData))
+        gameData.addNote(isDotaType: gameData is DotaData ? true : false,
+                         name: nameText,
+                         description: descriptionText,
+                         tag: tagText,
+                         color: colorData)
     }
 }

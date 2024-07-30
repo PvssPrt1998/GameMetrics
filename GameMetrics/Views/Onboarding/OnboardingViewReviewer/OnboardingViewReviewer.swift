@@ -3,10 +3,8 @@ import Combine
 
 struct OnboardingViewReviewer: View {
     
-    @Environment(\.safeAreaInsets) private var safeAreaInsets
-    
     let toNext = PassthroughSubject<Bool, Never>()
-    
+    @Environment(\.safeAreaInsets) private var safeAreaInsets
     @State private var selection = 0
     @State private var offset: CGFloat = 0
     
@@ -31,9 +29,7 @@ struct OnboardingViewReviewer: View {
                                 .resizable()
                                 .overlay(
                                     GeometryReader { proxy -> Color in
-                                        
                                         let minX = proxy.frame(in: .global).minX
-                                        
                                         DispatchQueue.main.async {
                                             withAnimation(.default) {
                                                 self.offset = -minX

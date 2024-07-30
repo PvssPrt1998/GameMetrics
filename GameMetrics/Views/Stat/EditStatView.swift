@@ -20,13 +20,13 @@ struct EditStatView: View {
                     numberValidation(newValue)
                 })
                 .keyboardType(.numberPad)
-                .padding(.horizontal, 20)
+                .padding(.horizontal, horizontalPadding())
             EditTextField(text: $viewModel.tournamentPlaceText, label: "Tournament place", placeholder: "Enter")
                 .onChange(of: viewModel.tournamentPlaceText, perform: { newValue in
                     tournamentValidation(newValue)
                 })
                 .keyboardType(.numberPad)
-                .padding(.horizontal, 20)
+                .padding(.horizontal, horizontalPadding())
             PrimaryButton(title: "Save", disabled: buttonDisabled()) {
                 viewModel.setStat()
                 sheetSizeManager.dismissSheet()
@@ -34,7 +34,7 @@ struct EditStatView: View {
                     showSheet = false
                 }
             }
-            .padding(.horizontal, 20)
+            .padding(.horizontal, horizontalPadding())
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
@@ -57,6 +57,10 @@ struct EditStatView: View {
         .onAppear {
             sheetSizeManager.appearance()
         }
+    }
+    
+    private func horizontalPadding() -> CGFloat {
+        UIDevice.current.userInterfaceIdiom == .pad ? 36 : 20
     }
     
     private func buttonDisabled() -> Bool {

@@ -31,13 +31,14 @@ final class AppCoordinator: ObservableObject {
     }
     
     private func loadingView() -> some View {
-        let view = LoadingViewReviewer()
-        bind(view)
+        let viewModel = viewModelFactory.makeLoadingViewModel()
+        bind(viewModel)
+        let view = LoadingViewReviewer(viewModel: viewModel)
         return view
     }
     
-    private func bind(_ view: LoadingViewReviewer) {
-        dictionaryAnyCancellable[.loadingReviewer] = view.loaded
+    private func bind(_ viewModel: LoadingViewModel) {
+        dictionaryAnyCancellable[.loadingReviewer] = viewModel.loadedForCoordinator
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 self?.page = .onboardingReviewer

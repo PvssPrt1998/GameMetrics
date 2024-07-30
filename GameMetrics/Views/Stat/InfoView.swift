@@ -21,7 +21,7 @@ struct InfoView: View {
             
             HStack {
                 VStack(spacing: 5) {
-                    TextCustom(text: "\(viewModel.stat.numberOfMatches)", size: 34, weight: .bold, color: .specialPrimary)
+                    TextCustom(text: "\(numberOfMatches())", size: 34, weight: .bold, color: .specialPrimary)
                     TextCustom(text: "Number of matches", size: 12, weight: .medium, color: .textSecond)
                 }
                 Spacer()
@@ -41,7 +41,7 @@ struct InfoView: View {
                 }.frame(height: 48)
                 Spacer()
                 VStack(spacing: 5) {
-                    TextCustom(text: "\(viewModel.stat.tournamentPlace)", size: 34, weight: .bold, color: .specialPrimary)
+                    TextCustom(text: "\(tournamentPlace())", size: 34, weight: .bold, color: .specialPrimary)
                     TextCustom(text: "Team standings", size: 12, weight: .medium, color: .textSecond)
                 }
             }.frame(maxWidth: .infinity)
@@ -50,6 +50,14 @@ struct InfoView: View {
         .padding(EdgeInsets(top: 10, leading: 20, bottom: 10, trailing: 20))
         .background(Color.bgSecond)
         .clipShape(.rect(cornerRadius: 5))
+    }
+    
+    private func numberOfMatches() -> Int {
+        viewModel.stat != nil ? viewModel.stat!.numberOfMatches : 0
+    }
+    
+    private func tournamentPlace() -> Int {
+        viewModel.stat != nil ? viewModel.stat!.tournamentPlace : 0
     }
 }
 

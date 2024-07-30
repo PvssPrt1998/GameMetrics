@@ -12,7 +12,7 @@ struct NextButton: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
         }
         .frame(width: 342, height: 48)
-        .background(Color.onboardingControls)
+        .buttonStyle(NextButtonStyle())
         .clipShape(.rect(cornerRadius: 8))
     }
 }
@@ -20,4 +20,13 @@ struct NextButton: View {
 #Preview {
     NextButton(action: {})
         .frame(width: 160, height: 45)
+}
+
+struct NextButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .background(
+                configuration.isPressed ? Color.darkShadow : Color.onboardingControls
+            )
+    }
 }

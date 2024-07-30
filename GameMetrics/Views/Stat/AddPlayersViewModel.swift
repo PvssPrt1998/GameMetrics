@@ -12,6 +12,6 @@ final class AddPlayersViewModel: ObservableObject {
     
     func setPlayer() {
         guard let imageData = imageData else { return }
-        gameData.players.append(Player(image: imageData, name: text))
+        gameData.addPlayer(isDotaType: gameData is DotaData ? true : false, image: imageData, name: text)
     }
 }

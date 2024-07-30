@@ -1,9 +1,3 @@
-//
-//  PlayerCard.swift
-//  GameMetrics
-//
-//  Created by Николай Щербаков on 30.07.2024.
-//
 
 import SwiftUI
 

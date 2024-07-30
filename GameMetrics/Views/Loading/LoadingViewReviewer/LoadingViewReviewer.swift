@@ -3,9 +3,7 @@ import Combine
 
 struct LoadingViewReviewer: View {
     
-    let loaded = PassthroughSubject<Bool, Never>()
-    
-    @State var value: Double = 0
+    @ObservedObject var viewModel: LoadingViewModel
     
     var body: some View {
         ZStack {
@@ -14,26 +12,15 @@ struct LoadingViewReviewer: View {
                 .scaledToFit()
                 .frame(height: 110)
                 .padding(.bottom, 55)
-            ProgressViewCustom(value: $value)
+            ProgressViewCustom(value: $viewModel.value)
         }
         .ignoresSafeArea()
         .onAppear {
-            stroke()
-        }
-    }
-    
-    private func stroke() {
-        if value < 1 {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.02) {
-                self.value += 0.02
-                self.stroke()
-            }
-        } else {
-            loaded.send(true)
+            viewModel.stroke()
         }
     }
 }
 
 #Preview {
-    LoadingViewReviewer()
+    LoadingViewReviewer(viewModel: LoadingViewModel(dataManager: DataManager()))
 }

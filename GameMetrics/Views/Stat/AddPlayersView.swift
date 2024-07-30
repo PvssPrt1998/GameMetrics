@@ -21,8 +21,12 @@ struct AddPlayersView: View {
                     action()
                 }
             }
-            .padding(.horizontal, 20)
+            .padding(.horizontal, horizontalPadding())
         }
+    }
+    
+    private func horizontalPadding() -> CGFloat {
+        UIDevice.current.userInterfaceIdiom == .pad ? 36 : 16
     }
     
     private func buttonDisabled() -> Bool {
