@@ -2,18 +2,17 @@ import Foundation
 
 final class EditStatViewModel: ObservableObject {
     
-    let dataManager: DataManager
-    
+    let gameData: GameDataBase
     
     @Published var numberOfMathcesText = ""
     @Published var tournamentPlaceText = ""
     
-    init(dataManager: DataManager) {
-        self.dataManager = dataManager
+    init(gameData: GameDataBase) {
+        self.gameData = gameData
     }
     
     func setStat() {
         guard let numberOfMatches = Int(numberOfMathcesText), let tournamentPlace = Int(tournamentPlaceText) else { return }
-        dataManager.setStat(numberOfMathces: numberOfMatches, tournamentPlace: tournamentPlace)
+        gameData.setStat(numberOfMathces: numberOfMatches, tournamentPlace: tournamentPlace)
     }
 }

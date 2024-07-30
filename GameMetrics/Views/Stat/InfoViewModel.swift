@@ -3,20 +3,19 @@ import Combine
 
 final class InfoViewModel: ObservableObject {
     
-    @Published var dataManager: DataManager
+    @Published var gameData: GameDataBase
     
     var stat: Stat {
-        dataManager.stat
+        gameData.stat
     }
     
     private var statAnyCancellable: AnyCancellable?
     
-    init(dataManager: DataManager) {
-        self.dataManager = dataManager
+    init(gameData: GameDataBase) {
+        self.gameData = gameData
         
-        statAnyCancellable = dataManager.$stat.sink { [weak self] _ in
+        statAnyCancellable = gameData.$stat.sink { [weak self] _ in
             self?.objectWillChange.send()
         }
     }
-    
 }

@@ -15,7 +15,7 @@ struct MainView: View {
         VStack(spacing: 25) {
             TeamView(team: viewModel.team, action: viewModel.editButtonPressed)
             MainButton(text: "Dota2 Statistics", imageTitle: "chart.line.uptrend.xyaxis", action: viewModel.dotaStatButtonPressed)
-            MainButton(text: "LoL Statistics", imageTitle: "chart.xyaxis.line", action: {})
+            MainButton(text: "LoL Statistics", imageTitle: "chart.xyaxis.line", action: viewModel.lolStatButtonPressed)
             MainButton(text: "Settings", imageTitle:  "gearshape.fill", action: viewModel.settingsButtonPressed)
         }
         .padding(EdgeInsets(top: 19, 
@@ -39,7 +39,13 @@ struct MainView: View {
             .ignoresSafeArea()
         }
         .sheet(isPresented: $viewModel.showDotaStatSheet) {
-            StatView(title: "Dota2 Statistics", screenHeight: viewModel.screenHeight, viewModel: viewModel.statViewModel)
+            StatView(title: "Dota2 Statistics", screenHeight: viewModel.screenHeight, viewModel: viewModel.dotaStatViewModel)
+                .frame(maxHeight: .infinity, alignment: .top)
+                .background(Color.white)
+                .ignoresSafeArea()
+        }
+        .sheet(isPresented: $viewModel.showLolStatSheet) {
+            StatView(title: "LoL Statistics", screenHeight: viewModel.screenHeight, viewModel: viewModel.lolStatViewModel)
                 .frame(maxHeight: .infinity, alignment: .top)
                 .background(Color.white)
                 .ignoresSafeArea()

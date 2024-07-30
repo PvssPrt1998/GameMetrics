@@ -61,6 +61,6 @@ struct EditStatView: View {
 }
 
 #Preview {
-    EditStatView(viewModel: EditStatViewModel(dataManager: DataManager()), action: {})
+    EditStatView(viewModel: EditStatViewModel(gameData: DataManager().dotaData), action: {})
         .background(Color.white)
 }

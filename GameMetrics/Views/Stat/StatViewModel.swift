@@ -3,38 +3,36 @@ import Combine
 
 final class StatViewModel: ObservableObject {
     
-    @Published var dataManager: DataManager
-    
-    @Published var gameData: GameData
+    @Published var gameData: GameDataBase
 
     @Published var showAddPlayersView = false
     @Published var showAddNotesView = false
     @Published var showEditStatSheet = false
     
     var playersCount: Int {
-        dataManager.players.count
+        gameData.players.count
     }
     
     var players: [Player] {
-        dataManager.players
+        gameData.players
     }
     
     var notesCount: Int {
-        dataManager.notes.count
+        gameData.notes.count
     }
     
     var notes: [Note] {
-        dataManager.notes
+        gameData.notes
     }
     
     let infoViewModel: InfoViewModel
     
     private var playersAnyCancellable: AnyCancellable?
     
-    init(dataManager: DataManager) {
-        self.dataManager = dataManager
+    init(gameData: GameDataBase) {
+        self.gameData = gameData
         
-        self.infoViewModel = InfoViewModel(dataManager: dataManager)
+        self.infoViewModel = InfoViewModel(gameData: gameData)
         
         playersAnyCancellable = gameData.$players.sink { [weak self] _ in
             self?.objectWillChange.send()
@@ -42,18 +40,18 @@ final class StatViewModel: ObservableObject {
     }
     
     func getNoteBy(index: Int) -> Note {
-        dataManager.notes[index]
+        gameData.notes[index]
     }
     
     func makeAddPlayersViewModel() -> AddPlayersViewModel {
-        AddPlayersViewModel(dataManager: dataManager)
+        AddPlayersViewModel(gameData: gameData)
     }
     
     func makeAddNotesViewModel() -> AddNotesViewModel {
-        AddNotesViewModel(dataManager: dataManager)
+        AddNotesViewModel(gameData: gameData)
     }
     
     func makeEditStatViewModel() -> EditStatViewModel {
-        EditStatViewModel(dataManager: dataManager)
+        EditStatViewModel(gameData: gameData)
     }
 }

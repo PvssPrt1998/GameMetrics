@@ -54,7 +54,7 @@ struct InfoView: View {
 }
 
 #Preview {
-    InfoView(viewModel: InfoViewModel(dataManager: DataManager()), action: {
+    InfoView(viewModel: InfoViewModel(gameData: DataManager().dotaData), action: {
         
     })
         .background(Color.white)

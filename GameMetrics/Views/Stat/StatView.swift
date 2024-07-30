@@ -117,6 +117,6 @@ struct StatView: View {
 }
 
 #Preview {
-    StatView(title: "Dota2 stat", screenHeight: 844, viewModel: StatViewModel(dataManager: DataManager()))
+    StatView(title: "Dota2 stat", screenHeight: 844, viewModel: StatViewModel(gameData: DataManager().dotaData))
         .background(Color.white)
 }

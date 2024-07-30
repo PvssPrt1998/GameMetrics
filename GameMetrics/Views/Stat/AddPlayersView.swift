@@ -32,7 +32,7 @@ struct AddPlayersView: View {
 
 struct AddPlayersView_Preview: PreviewProvider {
     static var previews: some View {
-        AddPlayersView(viewModel: AddPlayersViewModel(dataManager: DataManager()), action: {})
+        AddPlayersView(viewModel: AddPlayersViewModel(gameData: DataManager().dotaData), action: {})
             .background(Color.white)
     }
 }

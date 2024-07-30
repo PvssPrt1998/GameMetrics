@@ -55,6 +55,6 @@ struct AddNotesView: View {
 }
 
 #Preview {
-    AddNotesView(viewModel: AddNotesViewModel(dataManager: DataManager()), action: {})
+    AddNotesView(viewModel: AddNotesViewModel(gameData: DataManager().dotaData), action: {})
         .background(Color.white)
 }

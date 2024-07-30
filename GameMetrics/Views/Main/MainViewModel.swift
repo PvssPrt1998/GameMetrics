@@ -7,10 +7,12 @@ final class MainViewModel: ObservableObject {
     
     @Published var showTeamEditSheet: Bool = false
     @Published var showDotaStatSheet: Bool = false
+    @Published var showLolStatSheet: Bool = false
     @Published var showSettingsSheet: Bool = false
     
     let teamEditViewModel: TeamEditViewModel
-    let statViewModel: StatViewModel
+    let dotaStatViewModel: StatViewModel
+    let lolStatViewModel: StatViewModel
     
     var screenHeight: CGFloat = 0
     
@@ -23,7 +25,8 @@ final class MainViewModel: ObservableObject {
     init(dataManager: DataManager) {
         self.dataManager = dataManager
         self.teamEditViewModel = TeamEditViewModel(dataManager: dataManager)
-        self.statViewModel = StatViewModel(dataManager: dataManager)
+        self.dotaStatViewModel = StatViewModel(gameData: dataManager.dotaData)
+        self.lolStatViewModel = StatViewModel(gameData: dataManager.lolData)
         
         teamDataCancellable = dataManager.$team.sink { [weak self] team in
             self?.objectWillChange.send()
@@ -40,6 +43,10 @@ final class MainViewModel: ObservableObject {
     
     func dotaStatButtonPressed() {
         showDotaStatSheet = true
+    }
+    
+    func lolStatButtonPressed() {
+        showLolStatSheet = true
     }
     
     func settingsButtonPressed() {

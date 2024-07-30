@@ -6,10 +6,20 @@ protocol GameData {
     var stat: Stat { get set }
 }
 
+class GameDataBase: GameData {
+    @Published var players: Array<Player> = []
+    @Published var notes: Array<Note> = []
+    @Published var stat: Stat = Stat(numberOfMatches: 0, tournamentPlace: 0)
+    
+    func setStat(numberOfMathces: Int, tournamentPlace: Int) {
+        stat = Stat(numberOfMatches: numberOfMathces, tournamentPlace: tournamentPlace)
+    }
+}
+
 final class DataManager: ObservableObject {
     
-    var dotaData: GameData = DotaData()
-    var lolData: GameData = LolData()
+    var dotaData: GameDataBase = DotaData()
+    var lolData: GameDataBase = LolData()
     
     @Published var team: Team?
     @Published var players: Array<Player> = []
@@ -25,14 +35,10 @@ final class DataManager: ObservableObject {
     }
 }
 
-class DotaData: GameData, ObservableObject {
-    @Published var players: Array<Player> = []
-    @Published var notes: Array<Note> = []
-    @Published var stat: Stat = Stat(numberOfMatches: 0, tournamentPlace: 0)
+class DotaData: GameDataBase {
+    
 }
 
-class LolData: GameData, ObservableObject {
-    @Published var players: Array<Player> = []
-    @Published var notes: Array<Note> = []
-    @Published var stat: Stat = Stat(numberOfMatches: 0, tournamentPlace: 0)
+class LolData: GameDataBase {
+    
 }
