@@ -103,11 +103,9 @@ struct StatView: View {
             
             if viewModel.showEditStatSheet {
                 Color.black.opacity(0.2)
-                SheetContainerView(sheetSizeManager: SheetSizeManager(screenHeight: screenHeight), showSheet: $viewModel.showEditStatSheet) {
-                    EditStatView(viewModel: viewModel.makeEditStatViewModel()) {
-                        viewModel.showEditStatSheet = false
-                    }
-                }
+                EditStatView(viewModel: viewModel.makeEditStatViewModel(),
+                             sheetSizeManager: SheetSizeManager(screenHeight: screenHeight),
+                             showSheet: $viewModel.showEditStatSheet)
             }
         }
         

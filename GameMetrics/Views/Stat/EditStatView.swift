@@ -3,7 +3,8 @@ import SwiftUI
 struct EditStatView: View {
     
     @ObservedObject var viewModel: EditStatViewModel
-    let action: () -> Void
+    @StateObject var sheetSizeManager: SheetSizeManager
+    @Binding var showSheet: Bool
     
     var body: some View {
         VStack(spacing: 15) {
@@ -28,11 +29,34 @@ struct EditStatView: View {
                 .padding(.horizontal, 20)
             PrimaryButton(title: "Save", disabled: buttonDisabled()) {
                 viewModel.setStat()
-                action()
+                sheetSizeManager.dismissSheet()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    showSheet = false
+                }
             }
             .padding(.horizontal, 20)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+        .background(Color.white)
+        .cornerRadius(10, corners: [.topLeft, .topRight])
+        .offset(x: 0, y: sheetSizeManager.topPadding)
+        .gesture(
+            sheetSizeManager.dragGesture
+                .onChanged({value in
+                    sheetSizeManager.dragGestureOnChanged(value)
+                })
+                .onEnded({ value in
+                    if sheetSizeManager.dragGestureOnEnded(value) {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                            showSheet = false
+                        }
+                    }
+                })
+        )
+        .onAppear {
+            sheetSizeManager.appearance()
+        }
     }
     
     private func buttonDisabled() -> Bool {
@@ -60,7 +84,57 @@ struct EditStatView: View {
     }
 }
 
-#Preview {
-    EditStatView(viewModel: EditStatViewModel(gameData: DataManager().dotaData), action: {})
-        .background(Color.white)
+class SheetSizeManager: ObservableObject {
+    
+    let defaultPadding: CGFloat = 386
+    @Published var topPadding: CGFloat
+    
+    let screenHeight: CGFloat
+    let sheetHeight: CGFloat
+    
+    let dragGesture: DragGesture
+    
+    init(screenHeight: CGFloat) {
+        self.dragGesture = DragGesture()
+        self.screenHeight = screenHeight
+        self.sheetHeight = screenHeight - defaultPadding
+        self.topPadding = screenHeight
+    }
+    
+    func appearance() {
+        withAnimation(.linear(duration: 0.2)) {
+            topPadding = defaultPadding
+        }
+    }
+    
+    func dragGestureOnChanged(_ value: DragGesture.Value) {
+        if value.translation.height > 0 { //drag to bottom
+            topPadding = defaultPadding + value.translation.height
+        }
+    }
+    
+    func dragGestureOnEnded(_ value: DragGesture.Value) -> Bool {
+        let velocity = CGSize(
+            width:  value.predictedEndLocation.x - value.location.x,
+            height: value.predictedEndLocation.y - value.location.y
+        )
+        if value.translation.height + velocity.height > (sheetHeight / 2) {
+            withAnimation(.linear(duration: 0.1)) {
+                topPadding = screenHeight
+            }
+            return true
+        }
+        if value.translation.height + velocity.height < (sheetHeight / 2) {
+            withAnimation {
+                topPadding = defaultPadding
+            }
+        }
+        return false
+    }
+    
+    func dismissSheet() {
+        withAnimation(.linear(duration: 0.1)) {
+            topPadding = screenHeight
+        }
+    }
 }
