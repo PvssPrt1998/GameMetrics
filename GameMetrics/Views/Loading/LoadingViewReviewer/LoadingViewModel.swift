@@ -15,12 +15,12 @@ final class LoadingViewModel: ObservableObject {
     
     init(dataManager: DataManager) {
         self.dataManager = dataManager
-        
+        print("begin")
         loadedCancellable = dataManager.$dataLoaded.sink { [weak self] _ in
             self?.loaded = true
             self?.loadIfneeded()
         }
-        
+        loaded = false
         dataManager.loadLocalData()
     }
     

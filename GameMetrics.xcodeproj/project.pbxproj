@@ -208,8 +208,8 @@
 		9999E8272C57A684002C0819 /* LoadingViewReviewer */ = {
 			isa = PBXGroup;
 			children = (
-				9999E8282C57A6C1002C0819 /* LoadingViewReviewer.swift */,
 				9999E8CD2C5939F4002C0819 /* LoadingViewModel.swift */,
+				9999E8282C57A6C1002C0819 /* LoadingViewReviewer.swift */,
 			);
 			path = LoadingViewReviewer;
 			sourceTree = "<group>";

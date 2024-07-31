@@ -91,6 +91,21 @@ final class DataManager: ObservableObject {
                 }
             }
             self.team = try? localStorage.fetchTeam()
+            
+            DispatchQueue.main.async {
+                self.localLoaded()
+            }
+        }
+    }
+    
+    private func localLoaded() {
+        localDataLoaded = true
+        checkDataLoaded()
+    }
+    
+    private func checkDataLoaded() {
+        if localDataLoaded {
+            dataLoaded = true
         }
     }
 }
