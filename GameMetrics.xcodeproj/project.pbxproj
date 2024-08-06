@@ -66,6 +66,9 @@
 		9999E8CA2C593306002C0819 /* StatCoreData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9999E8C22C593306002C0819 /* StatCoreData+CoreDataClass.swift */; };
 		9999E8CB2C593306002C0819 /* StatCoreData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9999E8C32C593306002C0819 /* StatCoreData+CoreDataProperties.swift */; };
 		9999E8CE2C5939F4002C0819 /* LoadingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9999E8CD2C5939F4002C0819 /* LoadingViewModel.swift */; };
+		9999E9572C6232EE002C0819 /* SettingsWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9999E9562C6232EE002C0819 /* SettingsWebView.swift */; };
+		9999E9592C623350002C0819 /* SettingsWebViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9999E9582C623350002C0819 /* SettingsWebViewModel.swift */; };
+		9999E95B2C6233DF002C0819 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9999E95A2C6233DF002C0819 /* WebView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -129,6 +132,9 @@
 		9999E8C22C593306002C0819 /* StatCoreData+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StatCoreData+CoreDataClass.swift"; sourceTree = "<group>"; };
 		9999E8C32C593306002C0819 /* StatCoreData+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StatCoreData+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		9999E8CD2C5939F4002C0819 /* LoadingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewModel.swift; sourceTree = "<group>"; };
+		9999E9562C6232EE002C0819 /* SettingsWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsWebView.swift; sourceTree = "<group>"; };
+		9999E9582C623350002C0819 /* SettingsWebViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsWebViewModel.swift; sourceTree = "<group>"; };
+		9999E95A2C6233DF002C0819 /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -252,6 +258,7 @@
 				9999E85E2C57E8F2002C0819 /* EditTextField.swift */,
 				9999E8602C57EB71002C0819 /* GrabberView.swift */,
 				9999E8662C57F696002C0819 /* ImageView.swift */,
+				9999E95A2C6233DF002C0819 /* WebView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -386,6 +393,8 @@
 			isa = PBXGroup;
 			children = (
 				9999E8B22C58EE4F002C0819 /* SettingsView.swift */,
+				9999E9562C6232EE002C0819 /* SettingsWebView.swift */,
+				9999E9582C623350002C0819 /* SettingsWebViewModel.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -499,6 +508,7 @@
 				9999E8B32C58EE4F002C0819 /* SettingsView.swift in Sources */,
 				9999E8542C57E0B2002C0819 /* Team.swift in Sources */,
 				9999E8322C57AAFC002C0819 /* ProgressViewCustom.swift in Sources */,
+				9999E9592C623350002C0819 /* SettingsWebViewModel.swift in Sources */,
 				9999E8852C583DAC002C0819 /* Note.swift in Sources */,
 				9999E8352C57AB42002C0819 /* TextCustom.swift in Sources */,
 				9999E8C42C593306002C0819 /* PlayerCoreData+CoreDataClass.swift in Sources */,
@@ -506,6 +516,7 @@
 				9999E8C62C593306002C0819 /* TeamCoreData+CoreDataClass.swift in Sources */,
 				9999E8C72C593306002C0819 /* TeamCoreData+CoreDataProperties.swift in Sources */,
 				9999E8C82C593306002C0819 /* NoteCoreData+CoreDataClass.swift in Sources */,
+				9999E95B2C6233DF002C0819 /* WebView.swift in Sources */,
 				9999E8C92C593306002C0819 /* NoteCoreData+CoreDataProperties.swift in Sources */,
 				9999E8CA2C593306002C0819 /* StatCoreData+CoreDataClass.swift in Sources */,
 				9999E8CB2C593306002C0819 /* StatCoreData+CoreDataProperties.swift in Sources */,
@@ -528,6 +539,7 @@
 				9999E8A62C58E084002C0819 /* EditStatView.swift in Sources */,
 				9999E87A2C58321A002C0819 /* Player.swift in Sources */,
 				9999E8B82C5928F6002C0819 /* LocalStorage.swift in Sources */,
+				9999E9572C6232EE002C0819 /* SettingsWebView.swift in Sources */,
 				9999E8422C57B471002C0819 /* EnvironmentValues.swift in Sources */,
 				9999E8AE2C58E770002C0819 /* RoundedCornerExtension.swift in Sources */,
 				9999E8562C57E18C002C0819 /* ViewModelFactory.swift in Sources */,
