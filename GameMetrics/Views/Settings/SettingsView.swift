@@ -3,6 +3,7 @@ import SwiftUI
 
 struct SettingsView: View {
     
+    @State var showContacts = false
     @State var showTermsOfUse = false
     @State var showPrivacy = false
     @State var showLicense = false
@@ -18,7 +19,7 @@ struct SettingsView: View {
                 VStack(spacing: 0){
                     VStack(spacing: 0) {
                         Button {
-                            //action contact
+                            showContacts = true
                         } label: {
                             HStack(spacing: 12) {
                                 Image(systemName: "bubble.fill")
@@ -82,20 +83,27 @@ struct SettingsView: View {
                 }
                 
             }
+            
+            if showContacts {
+                SettingsWebView(action: {
+                    showContacts = false
+                }, url: "https://www.termsfeed.com/live/35a4a3ea-7384-4d62-af55-c414bea36c3c")
+            }
+            
             if showTermsOfUse {
                 SettingsWebView(action: {
                     showTermsOfUse = false
-                }, url: "https://www.google.com/")
+                }, url: "https://www.termsfeed.com/live/b37a1f23-c239-4900-8a6b-22d1b03bacde")
             }
             if showPrivacy {
                 SettingsWebView(action: {
                     showPrivacy = false
-                }, url: "https://www.google.com/")
+                }, url: "https://www.termsfeed.com/live/35a4a3ea-7384-4d62-af55-c414bea36c3c")
             }
             if showLicense {
                 SettingsWebView(action: {
                     showLicense = false
-                }, url: "https://www.google.com/")
+                }, url: "https://www.termsfeed.com/live/b37a1f23-c239-4900-8a6b-22d1b03bacde")
             }
         }
     }
