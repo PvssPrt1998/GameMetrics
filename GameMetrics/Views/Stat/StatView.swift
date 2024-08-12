@@ -116,8 +116,9 @@ struct StatView: View {
                         .padding(.top, third)
                         .padding(.horizontal, max(safeAreaInsets.trailing, safeAreaInsets.leading))
                     }
+                       
                 }
-                
+                .padding(.bottom, 8)
                 .frame(maxHeight: .infinity, alignment: .top)
             }
             .sheet(isPresented: $viewModel.showAddPlayersView) {

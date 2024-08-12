@@ -43,6 +43,7 @@ struct MainView: View {
                 .padding(.top, third)
             MainButton(text: "Settings", imageTitle:  "gearshape.fill", action: viewModel.settingsButtonPressed)
                 .padding(.top, fourth)
+                .padding(.bottom, 8)
         }
         .padding(EdgeInsets(top: topPadding(),
                             leading: horizontalPaddingForDevice(),
