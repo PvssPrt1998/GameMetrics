@@ -90,7 +90,7 @@ struct EditStatView: View {
 
 class SheetSizeManager: ObservableObject {
     
-    let defaultPadding: CGFloat = 386
+    let defaultPadding: CGFloat = 200
     @Published var topPadding: CGFloat
     
     let screenHeight: CGFloat
@@ -141,4 +141,8 @@ class SheetSizeManager: ObservableObject {
             topPadding = screenHeight
         }
     }
+}
+
+extension UIScreen {
+    static let screenHeight = UIScreen.current?.bounds.height
 }

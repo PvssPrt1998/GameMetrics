@@ -14,7 +14,6 @@ struct OnboardingViewReviewer: View {
         ImageTitles.OnboardingBackgroundReviewer3.rawValue
     ]
     
-    
     init() {
         UIScrollView.appearance().bounces = false
     }
@@ -98,6 +97,7 @@ struct OnboardingViewReviewer: View {
                        size: 28,
                        weight: .bold)
             NextButton(action: nextButtonPressed)
+                .padding(.bottom, 8)
         }
         .frame(maxHeight: .infinity, alignment: .bottom)
         .padding(.bottom, safeAreaInsets.bottom)
