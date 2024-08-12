@@ -7,11 +7,6 @@ struct LoadingViewReviewer: View {
     
     var body: some View {
         ZStack {
-            Image(ImageTitles.LoadingLogoReviewer.rawValue)
-                .resizable()
-                .scaledToFit()
-                .frame(height: 110)
-                .padding(.bottom, 55)
             ProgressViewCustom(value: $viewModel.value)
         }
         .ignoresSafeArea()
