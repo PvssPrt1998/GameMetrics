@@ -6,6 +6,8 @@ struct MainView: View {
     
     @State var appearanceCoverColorOpacity: Double = 1
     
+    @State var isPortrait: Bool
+    
     @Environment(\.safeAreaInsets) private var safeAreaInsets
     
     //Animation properties
@@ -17,10 +19,21 @@ struct MainView: View {
     
     init(viewModel: MainViewModel) {
         self.viewModel = viewModel
+        self.isPortrait = UIDevice.current.orientation.isPortrait
         UIScrollView.appearance().bounces = true
     }
     
-    var body: some View {
+    @ViewBuilder var contentWrapper: some View {
+        if isPortrait {
+            content
+        } else {
+            ScrollView {
+                content
+            }
+        }
+    }
+    
+    var content: some View {
         VStack(spacing: 25) {
             TeamView(team: viewModel.team, action: viewModel.editButtonPressed)
                 .padding(.top, first)
@@ -31,7 +44,7 @@ struct MainView: View {
             MainButton(text: "Settings", imageTitle:  "gearshape.fill", action: viewModel.settingsButtonPressed)
                 .padding(.top, fourth)
         }
-        .padding(EdgeInsets(top: topPadding(), 
+        .padding(EdgeInsets(top: topPadding(),
                             leading: horizontalPaddingForDevice(),
                             bottom: 0,
                             trailing: horizontalPaddingForDevice()))
@@ -47,7 +60,7 @@ struct MainView: View {
             }
         )
         .sheet(isPresented: $viewModel.showTeamEditSheet) {
-            TeamEditView(viewModel: viewModel.teamEditViewModel) {
+            TeamEditView(viewModel: viewModel.teamEditViewModel, isPortrait: $isPortrait) {
                 viewModel.showTeamEditSheet = false
             }
             .frame(maxHeight: .infinity, alignment: .top)
@@ -55,19 +68,19 @@ struct MainView: View {
             .ignoresSafeArea()
         }
         .sheet(isPresented: $viewModel.showDotaStatSheet) {
-            StatView(title: "Dota2 Statistics", screenHeight: viewModel.screenHeight, viewModel: viewModel.dotaStatViewModel)
+            StatView(isPortrait: $isPortrait, title: "Dota2 Statistics", screenHeight: viewModel.screenHeight, viewModel: viewModel.dotaStatViewModel, closeSheetAction: {viewModel.showDotaStatSheet = false})
                 .frame(maxHeight: .infinity, alignment: .top)
                 .background(Color.white)
                 .ignoresSafeArea()
         }
         .sheet(isPresented: $viewModel.showLolStatSheet) {
-            StatView(title: "LoL Statistics", screenHeight: viewModel.screenHeight, viewModel: viewModel.lolStatViewModel)
+            StatView(isPortrait: $isPortrait, title: "LoL Statistics", screenHeight: viewModel.screenHeight, viewModel: viewModel.lolStatViewModel, closeSheetAction: {viewModel.showLolStatSheet = false})
                 .frame(maxHeight: .infinity, alignment: .top)
                 .background(Color.white)
                 .ignoresSafeArea()
         }
         .sheet(isPresented: $viewModel.showSettingsSheet) {
-            SettingsView()
+            SettingsView(closeSheetAction: {viewModel.showSettingsSheet = false})
                 .frame(maxHeight: .infinity, alignment: .top)
                 .background(Color.white)
                 .ignoresSafeArea()
@@ -78,6 +91,14 @@ struct MainView: View {
             }
             itemsBounce()
         }
+    }
+    
+    var body: some View {
+        contentWrapper
+        .onReceive(NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)) { _ in
+                        guard let scene = UIApplication.shared.windows.first?.windowScene else { return }
+                        self.isPortrait = scene.interfaceOrientation.isPortrait
+                    }
     }
     
     private func topPadding() -> CGFloat {

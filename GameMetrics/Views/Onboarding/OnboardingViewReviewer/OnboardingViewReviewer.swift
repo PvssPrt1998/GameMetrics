@@ -7,6 +7,7 @@ struct OnboardingViewReviewer: View {
     @Environment(\.safeAreaInsets) private var safeAreaInsets
     @State private var selection = 0
     @State private var offset: CGFloat = 0
+    @State var isPortrait: Bool
     
     private var backgroundsTitles = [
         ImageTitles.OnboardingBackgroundReviewer1.rawValue,
@@ -16,6 +17,7 @@ struct OnboardingViewReviewer: View {
     
     init() {
         UIScrollView.appearance().bounces = false
+        self.isPortrait = UIDevice.current.orientation.isPortrait
     }
     
     var body: some View {
@@ -57,6 +59,10 @@ struct OnboardingViewReviewer: View {
             }
             .ignoresSafeArea()
         }
+        .onReceive(NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)) { _ in
+                        guard let scene = UIApplication.shared.windows.first?.windowScene else { return }
+                        self.isPortrait = scene.interfaceOrientation.isPortrait
+                    }
     }
     
     private func nextButtonPressed() {
@@ -93,9 +99,16 @@ struct OnboardingViewReviewer: View {
     
     private func textAndButtonView() -> some View {
         VStack(spacing: 16) {
-            TextCustom(text: textFor(selection: selection),
-                       size: 28,
-                       weight: .bold)
+            if isPortrait {
+                TextCustom(text: textFor(selection: selection),
+                           size: 28,
+                           weight: .bold)
+            } else {
+                TextCustom(text: textFor(selection: selection),
+                           size: 28,
+                           weight: .bold)
+                .shadow(color: .black, radius: 1)
+            }
             NextButton(action: nextButtonPressed)
                 .padding(.bottom, 8)
         }

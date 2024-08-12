@@ -2,10 +2,14 @@ import SwiftUI
 
 struct StatView: View {
     
+    @Binding var isPortrait: Bool
+    
     let title: String
     let screenHeight: CGFloat
     @Environment(\.safeAreaInsets) private var safeAreaInsets
     @ObservedObject var viewModel: StatViewModel
+    
+    let closeSheetAction: () -> Void
     
     @State var first: CGFloat = 50
     @State var second: CGFloat = 50
@@ -15,13 +19,37 @@ struct StatView: View {
         ZStack {
             ScrollView(.vertical) {
                 VStack(spacing: itemSpacing()) {
-                    GrabberView()
-                        .padding(5)
-                        .hidden()
-                    TextCustom(text: title, size: 34, weight: .bold, color: .textMain)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(EdgeInsets(top: 21, leading: -4, bottom: 8, trailing: -4))
-                        .padding(.horizontal, 20)
+                    ZStack {
+                        VStack(spacing: itemSpacing()) {
+                            GrabberView()
+                                .padding(5)
+                                .hidden()
+                            HStack {
+                                TextCustom(text: title, size: 34, weight: .bold, color: .textMain)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .padding(EdgeInsets(top: 21, leading: -4, bottom: 8, trailing: -4))
+                                    .padding(.horizontal, 20)
+                                .padding(.horizontal, max(safeAreaInsets.trailing, safeAreaInsets.leading))
+                                Spacer()
+                                if !isPortrait {
+                                    Button {
+                                        closeSheetAction()
+                                    } label: {
+                                        Image(systemName: "xmark")
+                                            .resizable()
+                                            .scaledToFit()
+                                            .foregroundColorCustom(.black)
+                                            .frame(width: 24, height: 24)
+                                    }
+                                    .padding(EdgeInsets(top: 24, leading: 0, bottom: 0, trailing: 24 + max(safeAreaInsets.trailing, safeAreaInsets.leading)))
+                                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
+                                }
+                            }
+                            
+                        }
+                        
+                    }
+                    
                     InfoView(viewModel: viewModel.infoViewModel) {
                         viewModel.showEditStatSheet = true
                     }
@@ -86,13 +114,14 @@ struct StatView: View {
                         }
                         .padding(.bottom, safeAreaInsets.bottom)
                         .padding(.top, third)
+                        .padding(.horizontal, max(safeAreaInsets.trailing, safeAreaInsets.leading))
                     }
                 }
                 
                 .frame(maxHeight: .infinity, alignment: .top)
             }
             .sheet(isPresented: $viewModel.showAddPlayersView) {
-                AddPlayersView(viewModel: viewModel.makeAddPlayersViewModel()) {
+                AddPlayersView(viewModel: viewModel.makeAddPlayersViewModel(), isPortrait: $isPortrait) {
                     viewModel.showAddPlayersView = false
                 }
                 .frame(maxHeight: .infinity, alignment: .top)
@@ -100,7 +129,7 @@ struct StatView: View {
                 .ignoresSafeArea()
             }
             .sheet(isPresented: $viewModel.showAddNotesView) {
-                AddNotesView(viewModel: viewModel.makeAddNotesViewModel()) { 
+                AddNotesView(viewModel: viewModel.makeAddNotesViewModel(), isPortrait: $isPortrait) { 
                     viewModel.showAddNotesView = false
                 }
                 .frame(maxHeight: .infinity, alignment: .top)
@@ -112,19 +141,25 @@ struct StatView: View {
             if viewModel.showEditStatSheet {
                 Color.black.opacity(0.2)
                 EditStatView(viewModel: viewModel.makeEditStatViewModel(),
-                             sheetSizeManager: SheetSizeManager(screenHeight: screenHeight),
-                             showSheet: $viewModel.showEditStatSheet)
+                             sheetSizeManager: SheetSizeManager(screenHeight: screenHeight, isPortrait: isPortrait),
+                             showSheet: $viewModel.showEditStatSheet, isPortrait: $isPortrait)
             }
-            GrabberView()
-                .padding(5)
-                .frame(maxHeight: .infinity, alignment: .top)
+            if isPortrait {
+                GrabberView()
+                    .padding(5)
+                    .frame(maxHeight: .infinity, alignment: .top)
+            }
         }
         .onAppear { itemsMove() }
+        .onReceive(NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)) { _ in
+                        guard let scene = UIApplication.shared.windows.first?.windowScene else { return }
+                        self.isPortrait = scene.interfaceOrientation.isPortrait
+                    }
         
     }
     
     private func horizontalPadding() -> CGFloat {
-        UIDevice.current.userInterfaceIdiom == .pad ? 50 : 16
+        UIDevice.current.userInterfaceIdiom == .pad ? 50 + max(safeAreaInsets.trailing, safeAreaInsets.leading) : 16 + max(safeAreaInsets.trailing, safeAreaInsets.leading)
     }
     
     private func itemSpacing() -> CGFloat {
@@ -142,7 +177,12 @@ struct StatView: View {
     }
 }
 
-#Preview {
-    StatView(title: "Dota2 stat", screenHeight: 844, viewModel: StatViewModel(gameData: DataManager().dotaData))
-        .background(Color.white)
+struct StatView_Preview: PreviewProvider {
+    
+    @State static var isPortrait = true
+    
+    static var previews: some View {
+        StatView(isPortrait: $isPortrait, title: "Dota2 stat", screenHeight: 844, viewModel: StatViewModel(gameData: DataManager().dotaData), closeSheetAction: {})
+            .background(Color.white)
+    }
 }

@@ -441,6 +441,8 @@
 			dependencies = (
 			);
 			name = GameMetrics;
+			packageProductDependencies = (
+			);
 			productName = GameMetrics;
 			productReference = 9999E8142C57A57D002C0819 /* GameMetrics.app */;
 			productType = "com.apple.product-type.application";
@@ -469,6 +471,9 @@
 				Base,
 			);
 			mainGroup = 9999E80B2C57A57D002C0819;
+			packageReferences = (
+				99EB82632C6A435800147F23 /* XCRemoteSwiftPackageReference "swiftui-interface-orientation" */,
+			);
 			productRefGroup = 9999E8152C57A57D002C0819 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -695,7 +700,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 14;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -729,7 +734,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 14;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -770,6 +775,17 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		99EB82632C6A435800147F23 /* XCRemoteSwiftPackageReference "swiftui-interface-orientation" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/wvteijlingen/swiftui-interface-orientation";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCVersionGroup section */
 		9999E8B92C5929C7002C0819 /* GameMetrics.xcdatamodeld */ = {

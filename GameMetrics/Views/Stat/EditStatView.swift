@@ -5,13 +5,56 @@ struct EditStatView: View {
     @ObservedObject var viewModel: EditStatViewModel
     @StateObject var sheetSizeManager: SheetSizeManager
     @Binding var showSheet: Bool
+    @Binding var isPortrait: Bool
     
-    var body: some View {
+    @Environment(\.safeAreaInsets) private var safeAreaInsets
+    
+    @ViewBuilder var contentWrapper: some View {
+        if isPortrait {
+            content
+        } else {
+            ScrollView {
+                content
+            }
+        }
+    }
+    
+    var content: some View {
         VStack(spacing: 15) {
-            GrabberView()
-                .padding(.top, 5)
-            TextCustom(text: "Edit statistic", size: 15, weight: .bold, color: .textMain)
-                .padding(.horizontal, 16)
+            ZStack {
+                VStack(spacing: 15) {
+                    if isPortrait {
+                        GrabberView()
+                            .padding(.top, 5)
+                    } else {
+                        GrabberView()
+                            .padding(.top, 5)
+                            .hidden()
+                    }
+                    TextCustom(text: "Edit statistic", size: 15, weight: .bold, color: .textMain)
+                        .padding(.horizontal, 16)
+                }
+                
+                if !isPortrait {
+                    Button {
+                        sheetSizeManager.dismissSheet()
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                            showSheet = false
+                        }
+                    } label: {
+                        Image(systemName: "xmark")
+                            .resizable()
+                            .scaledToFit()
+                            .foregroundColorCustom(.black)
+                            .frame(width: 24, height: 24)
+                    }
+                    .padding(EdgeInsets(top: 24, leading: 0, bottom: 0, trailing: 24 + max(safeAreaInsets.trailing, safeAreaInsets.leading)))
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
+                }
+            }
+            
+           
+            
             Divider()
                 .padding(.bottom, 5)
             
@@ -36,7 +79,10 @@ struct EditStatView: View {
             }
             .padding(.horizontal, horizontalPadding())
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+    }
+    
+    var body: some View {
+        contentWrapper
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .background(Color.white)
         .cornerRadius(10, corners: [.topLeft, .topRight])
@@ -44,7 +90,9 @@ struct EditStatView: View {
         .gesture(
             sheetSizeManager.dragGesture
                 .onChanged({value in
-                    sheetSizeManager.dragGestureOnChanged(value)
+                    if isPortrait {
+                        sheetSizeManager.dragGestureOnChanged(value)
+                    }
                 })
                 .onEnded({ value in
                     if sheetSizeManager.dragGestureOnEnded(value) {
@@ -57,10 +105,19 @@ struct EditStatView: View {
         .onAppear {
             sheetSizeManager.appearance()
         }
+        .onReceive(NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)) { _ in
+                        guard let scene = UIApplication.shared.windows.first?.windowScene else { return }
+                        self.isPortrait = scene.interfaceOrientation.isPortrait
+                        if isPortrait {
+                            sheetSizeManager.defaultPadding = 200
+                        } else {
+                            sheetSizeManager.defaultPadding = 0
+                        }
+                    }
     }
     
     private func horizontalPadding() -> CGFloat {
-        UIDevice.current.userInterfaceIdiom == .pad ? 36 : 20
+        UIDevice.current.userInterfaceIdiom == .pad ? 36 + max(safeAreaInsets.trailing, safeAreaInsets.leading) : 20 + max(safeAreaInsets.trailing, safeAreaInsets.leading)
     }
     
     private func buttonDisabled() -> Bool {
@@ -90,19 +147,25 @@ struct EditStatView: View {
 
 class SheetSizeManager: ObservableObject {
     
-    let defaultPadding: CGFloat = 200
+    @Published var defaultPadding: CGFloat {
+        didSet {
+            appearance()
+        }
+    }
     @Published var topPadding: CGFloat
     
     let screenHeight: CGFloat
-    let sheetHeight: CGFloat
+    var sheetHeight: CGFloat
     
     let dragGesture: DragGesture
     
-    init(screenHeight: CGFloat) {
+    init(screenHeight: CGFloat, isPortrait: Bool) {
         self.dragGesture = DragGesture()
+        self.defaultPadding = isPortrait ? 200 : 0
         self.screenHeight = screenHeight
-        self.sheetHeight = screenHeight - defaultPadding
         self.topPadding = screenHeight
+        self.sheetHeight = screenHeight
+        self.sheetHeight = screenHeight - self.defaultPadding
     }
     
     func appearance() {
